@@ -17,4 +17,4 @@ server.get('/ping', (req, res) => {
 });
 server.post("/api", records.getDatas);
 
-codeServer.listen(3000);
+codeServer.listen(process.env.PORT || 5000);
