@@ -50,33 +50,61 @@ var MongoClient = require("mongodb").MongoClient;
 var url = process.env.MONGODB_URI;
 
 module.exports = class DataService {
-  static async init() {
-    try {
-      this.repository = await GenericRepository.init();
-      return this;
-    } catch (ex) {
-      throw ex;
-    }
+  static init() {
+    // try {
+    //   this.repository = await GenericRepository.init();
+    return this;
+    // } catch (ex) {
+    //   throw ex;
+    // }
   }
 
   static where(params) {
+    const { startDate, endDate, minCount, maxCount } = params;
     return new Promise((resolve, reject) => {
       MongoClient.connect(url, function (err, db) {
-        if (err) reject(err);
+        if (err) {
+          reject(err);
+          return;
+        }
         var dbo = db.db("getir-case-study");
-        let filter = {};
-        if (startDate )
+        
+        if (
+          startDate &&
+          startDate.match(
+            /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
+          )
+        ) {
+        } else {
+          reject("StartDate parameter is missing/wrong.");
+        }
+        if (
+          endDate &&
+          endDate.match(
+            /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
+          )
+        ) {
+        } else {
+          reject("StartDate parameter is missing/wrong.");
+        }
+        if (minCount && maxCount && minCount <= maxCount) {
+          
+        } else {
+          reject("minCount or maxCount parameter is missing/wrong.");
+        }
         dbo
           .collection("records")
-          .find({})
+          .aggregate(recordFindAggregate(params))
           .toArray(function (err, result) {
-            if (err) reject( err);
+            if (err) {
+              reject(err);
+              return;
+            }
             console.log(result);
             db.close();
-            resolve(result)
+            resolve(result);
           });
       });
     });
-    
   }
 };

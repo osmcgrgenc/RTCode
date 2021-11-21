@@ -15,7 +15,11 @@ describe("Express Tests", () => {
       maxCount: 3000,
     };
   });
-  it("Should get example datas", async function (done)  {
-    RecordService.init().then((res)=>res.find(caseExample).then(done));
+  it("Should get example datas", function (done) {
+    const service = RecordService.init();
+    service
+      .where(caseExample)
+      .then((res) => done())
+      .catch((err) => done(err));
   });
 });

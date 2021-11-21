@@ -8,16 +8,12 @@ const ErrorResponse = require("../model/response/ErrorResponse");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get("/api", async (req, res, next) => {
+router.post("/api", async (req, res, next) => {
   const recordsService = await records.init();
-  const example = {
-    startDate: "2019-01-26",
-    endDate: "2021-11-02",
-    minCount: 0,
-    maxCount: 3000,
-  };
+  const params = req.body;
+  
   recordsService
-    .where(example)
+    .where(params)
     .then((result) => {
       console.log(result);
       res.status(200).json(new SuccessResponse(0, "Success", result));
@@ -25,7 +21,7 @@ router.get("/api", async (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(431).json(new ErrorResponse(0, "Err", err));
+      res.status(431).json(new ErrorResponse(431, "Error", err));
       next();
     });
 });

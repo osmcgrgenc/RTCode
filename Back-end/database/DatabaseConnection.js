@@ -14,7 +14,7 @@ module.exports = class DatabaseConnection {
               console.log("Connected to mongodb database..");
             },
             (err) => {
-              console.err("Error while connecting to mongodb database..", err);
+              console.error("Error while connecting to mongodb database..", err);
             }
           );
       }
