@@ -1,25 +1,27 @@
-const mongoose = require("mongoose");
-
+var MongoClient = require("mongodb").MongoClient;
+const url = process.env.MONGODB_URI;
 module.exports = class DatabaseConnection {
-  static async getConnection() {
-    try {
-      if (!mongoose.connection.readyState) {
-        await mongoose
-          .connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          })
-          .then(
-            () => {
-              console.log("Connected to mongodb database..");
-            },
-            (err) => {
-              console.error("Error while connecting to mongodb database..", err);
-            }
-          );
+  db=null
+  dbo=null
+  static getConnection() {
+    return new Promise((resolve, reject) => {
+      try {
+        MongoClient.connect(url,  (err, db)=> {
+          if (err) {
+            reject(err);
+            return;
+          }
+          this.db = db;
+          var dbo = db.db("getir-case-study");
+          this.dbo = dbo;
+          resolve({ db: this.db, dbo: dbo });
+        });
+      } catch (ex) {
+        reject(ex);
       }
-    } catch (ex) {
-      throw ex;
-    }
+    });
+  }
+  static disConnection() {
+    this.db.close();
   }
 };

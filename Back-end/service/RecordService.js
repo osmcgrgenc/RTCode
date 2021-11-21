@@ -1,5 +1,4 @@
 const GenericRepository = require("../database/repository/GenericRepository");
-const RecordModel = require("../database/model/Record");
 const recordFindAggregate = (searchDTO) => {
   const { startDate, endDate, maxCount, minCount } = searchDTO;
   return [
@@ -46,65 +45,23 @@ const recordFindAggregate = (searchDTO) => {
   ];
 };
 
-var MongoClient = require("mongodb").MongoClient;
-var url = process.env.MONGODB_URI;
-
 module.exports = class DataService {
-  static init() {
-    // try {
-    //   this.repository = await GenericRepository.init();
-    return this;
-    // } catch (ex) {
-    //   throw ex;
-    // }
+  static async init() {
+    return new Promise((resolve, reject) => {
+      try {
+        GenericRepository.init().then(res => { this.repository = res;resolve(this)});
+      } catch (ex) {
+        throw ex;
+      }
+    });
   }
 
   static where(params) {
-    const { startDate, endDate, minCount, maxCount } = params;
     return new Promise((resolve, reject) => {
-      MongoClient.connect(url, function (err, db) {
-        if (err) {
-          reject(err);
-          return;
-        }
-        var dbo = db.db("getir-case-study");
-        
-        if (
-          startDate &&
-          startDate.match(
-            /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
-          )
-        ) {
-        } else {
-          reject("StartDate parameter is missing/wrong.");
-        }
-        if (
-          endDate &&
-          endDate.match(
-            /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/
-          )
-        ) {
-        } else {
-          reject("StartDate parameter is missing/wrong.");
-        }
-        if (minCount && maxCount && minCount <= maxCount) {
-          
-        } else {
-          reject("minCount or maxCount parameter is missing/wrong.");
-        }
-        dbo
-          .collection("records")
-          .aggregate(recordFindAggregate(params))
-          .toArray(function (err, result) {
-            if (err) {
-              reject(err);
-              return;
-            }
-            console.log(result);
-            db.close();
-            resolve(result);
-          });
-      });
+      this.repository
+        .where("records", recordFindAggregate(params))
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
     });
   }
 };
