@@ -4,6 +4,10 @@ const ErrorResponse = require("../model/response/ErrorResponse");
 
 class Records {
   getDatas = async (req, res, next) => {
+    /**
+     * First check the request body for the error handling
+     * Dates are checked by regex YYYY-MM-DD
+     */
     const params = req.body;
     const { startDate, endDate, minCount, maxCount } = params;
     if (
@@ -62,6 +66,10 @@ class Records {
           res.status(431).json(new ErrorResponse(431, "Error", err));
           next();
         });
+    }).catch((err) => {
+      console.log(err);
+      res.status(430).json(new ErrorResponse(430, "Error", err));
+      next();
     });
   };
 }

@@ -5,9 +5,18 @@ A table's rows are gotten by Node Js Post methods and they are filtered by some 
 ## How to Setup
 
 1. create .env file from .env.example
-2. npm install
-3. npm run test
-4. npm run start
+2. Install dependencies
+```bash 
+npm install
+```
+3. Check that the functions works successfully
+```bash
+npm run test
+```
+4. Run the project
+```bash
+npm run start
+```
 
 ## Heroku
 
@@ -58,3 +67,29 @@ A table's rows are gotten by Node Js Post methods and they are filtered by some 
     "records":[] 
 }
 ```
+# Error Handling
+- 401 **Start Date Error**
+```js
+new ErrorResponse(
+            401,
+            "Error",
+            "StartDate parameter is missing/wrong."
+          )
+```
+- 402 **End Date Error**
+```js
+new ErrorResponse(
+            402,
+            "Error",
+            "EndDate parameter is missing/wrong."
+          )
+```
+- 403 **Count Parameters Error**
+```js
+new ErrorResponse(
+            403,
+            "Error",
+            "minCount or maxCount parameter is missing/wrong."
+          )
+```
+

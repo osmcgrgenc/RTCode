@@ -1,6 +1,13 @@
 const GenericRepository = require("../database/repository/GenericRepository");
-const recordFindAggregate = (searchDTO) => {
-  const { startDate, endDate, maxCount, minCount } = searchDTO;
+
+/**
+ * 
+ * @param {*} params 
+ * @returns 
+ * Create a record find aggrate object
+ */
+const recordFindAggregate = (params) => {
+  const { startDate, endDate, maxCount, minCount } = params;
   return [
     {
       $match: {

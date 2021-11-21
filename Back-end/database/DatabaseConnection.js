@@ -6,12 +6,18 @@ module.exports = class DatabaseConnection {
   static getConnection() {
     return new Promise((resolve, reject) => {
       try {
+        /**
+         * Mongo DB connection
+         */
         MongoClient.connect(url,  (err, db)=> {
           if (err) {
             reject(err);
             return;
           }
           this.db = db;
+          /**
+           * Connect the getir-case-study database
+           */
           var dbo = db.db("getir-case-study");
           this.dbo = dbo;
           resolve({ db: this.db, dbo: dbo });

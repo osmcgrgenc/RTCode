@@ -16,6 +16,9 @@ module.exports = class GenericRepository {
     const dbo = this.dbo;
     const db = this.db;
     return new Promise((resolve, reject) => {
+      /**
+       * Mongo DB where clausure
+       */
       dbo
         .collection(model)
         .aggregate(params)
