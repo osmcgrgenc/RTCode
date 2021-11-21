@@ -45,6 +45,10 @@ const recordFindAggregate = (searchDTO) => {
     },
   ];
 };
+
+var MongoClient = require("mongodb").MongoClient;
+var url = process.env.MONGODB_URI;
+
 module.exports = class DataService {
   static async init() {
     try {
@@ -57,14 +61,22 @@ module.exports = class DataService {
 
   static where(params) {
     return new Promise((resolve, reject) => {
-      try {
-        this.repository
-          .where(RecordModel, recordFindAggregate(params))
-          .then((res) => resolve(res))
-          .catch((err) => reject(err));
-      } catch (ex) {
-        throw ex;
-      }
+      MongoClient.connect(url, function (err, db) {
+        if (err) reject(err);
+        var dbo = db.db("getir-case-study");
+        let filter = {};
+        if (startDate )
+        dbo
+          .collection("records")
+          .find({})
+          .toArray(function (err, result) {
+            if (err) reject( err);
+            console.log(result);
+            db.close();
+            resolve(result)
+          });
+      });
     });
+    
   }
 };
