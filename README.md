@@ -93,3 +93,39 @@ new ErrorResponse(
           )
 ```
 
+# Why did I use this struct?
+
+I created Sazik.Dev. This is collabration online code editor. I want to use this project with collages. We can develope Node projects as online. And we can test here. I changed this project's struct for the case. In normally, it has front-end folder. But In the case, it wasnt necessary. And I used ObjectionJs for PostgreSql or Sqlite. But In the case, MongoDb was required. So I fixed some folders and libraries for the case. 
+You can check the [Sazik.Dev](https://sazik.dev).
+And **this case struct**:
+```markdown
+#
+
+* [Back-end/](./Back-end)
+  * [controller/](./Back-end/controller)
+    * [Main.js](./Back-end/controller/Main.js)
+    * [Records.js](./Back-end/controller/Records.js)
+  * [database/](./Back-end/database)
+    * [model/](./Back-end/database/model)
+      * [Record.js](./Back-end/database/model/Record.js)
+    * [repository/](./Back-end/database/repository)
+      * [GenericRepository.js](./Back-end/database/repository/GenericRepository.js)
+    * [DatabaseConnection.js](./Back-end/database/DatabaseConnection.js)
+  * [model/](./Back-end/model)
+    * [response/](./Back-end/model/response)
+      * [ErrorResponse.js](./Back-end/model/response/ErrorResponse.js)
+      * [SuccessResponse.js](./Back-end/model/response/SuccessResponse.js)
+  * [service/](./Back-end/service)
+    * [RecordService.js](./Back-end/service/RecordService.js)
+  * [test/](./Back-end/test)
+    * [ExpressTest.js](./Back-end/test/ExpressTest.js)
+    * [MongooseTest.js](./Back-end/test/MongooseTest.js)
+  * [util/](./Back-end/util)
+    * [AsyncMiddleware.js](./Back-end/util/AsyncMiddleware.js)
+    * [Util.js](./Back-end/util/Util.js)
+* [.env.example](./.env.example)
+* [.gitignore](./.gitignore)
+* [README.md](./README.md)
+* [package.json](./package.json)
+
+``` 
