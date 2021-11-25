@@ -9,11 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/osmcgrgenc/SingleEndpointAPI.git"
+    "url": "git+https://github.com/osmcgrgenc/SingleEndpoint.git"
   },
   "author": "Osman Cagri GENC",
   "bugs": {
-    "url": "https://github.com/osmcgrgenc/SingleEndpointAPI/issues"
+    "url": "https://github.com/osmcgrgenc/SingleEndpoint/issues"
   },
   "homepage": "https://singleendpointapi.herokuapp.com",
   "dependencies": {
