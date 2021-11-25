@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/osmcgrgenc/SingleEndpointAPI/issues"
   },
-  "homepage": "https://osmancagrigenc.herokuapp.com",
+  "homepage": "https://singleendpointapi.herokuapp.com",
   "dependencies": {
     "ansi-escapes": "^4.3.0",
     "body-parser": "^1.19.0",
