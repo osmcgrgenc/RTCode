@@ -16,7 +16,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.get('/ping', (req, res) => {
     res.status(200).json("PONG");
 });
-server.post("/api", records.getDatas);
+server.post("/api", api);
 server.use("/users", users);
 
 codeServer.listen(process.env.PORT || 10000);

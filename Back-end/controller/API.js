@@ -64,6 +64,7 @@ server.get("/users", async function(req,res,next){
     res.status(200).send(response.data);
 
 })
+
 function getUsers() {
     return axios.get("url");
 }
